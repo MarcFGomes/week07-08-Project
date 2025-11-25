@@ -9,47 +9,39 @@
     <!--script src="https://cdn.tailwindcss.com"></script>-->
   </head>
   <body>
-    <header id="header-section">
-      <!-- Title Section -->
-      <div id="left-header">
-        <h1>Globe Lens</h1>
-        <h2>A Visual Guide to the World</h2>
-      </div>
+    <header>
+        <!-- Title Section -->
+        <div id="left-header">
+            <h1>Globe Lens</h1>
+            <h2>A Visual Guide to the World</h2>
+        </div>
 
       <!-- Search Section -->
-      <div id="right-header">
-        <!-- Input Field -->
-        <input
-          type="text"
-          id="place"
-          name="searchPlace"
-          placeholder="Type the place you wish to discover"
-        />
+        <div id="right-header">
+            <!-- Input Field -->
+            <input
+            type="text"
+            id="place"
+            name="searchPlace"
+            placeholder="Type the place you wish to discover"
+            />
 
-        <!-- Search Button -->
-        <button
-          id="search-button"
-          class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors"
-        >
-          Search
-        </button>
+            <!-- Search Button -->
+            <button
+            id="search-button"
+            >
+            Search
+            </button>
 
-        <!-- Previous Searches Dropdown -->
-        <div class="relative group inline-block">
-          <button
-            id="history-button"
-          >
-            Previous Searches
-          </button>
+            <!-- Previous Searches Dropdown -->
+            <div class="relative group inline-block">
+                <button id="history-button">Previous Searches</button>
 
-          <ul
-            id="history-list"
-           
-          >
-            <!-- Previous searches populated dynamically -->
-          </ul>
+                <ul id="history-list">
+                    <!-- Previous searches populated dynamically -->
+                </ul>
+            </div>
         </div>
-      </div>
     </header>
 
     <script src="./assets/js/history.js"></script>

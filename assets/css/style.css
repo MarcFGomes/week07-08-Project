@@ -1,0 +1,40 @@
+/* Universal selector reset for margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+:root {
+    --header-width: 50%;
+    
+    --button-height: 30px;
+    --left-side-boder-radius: 4px;
+    --section-padding: 10px 5px;
+    --gap-forecast: 5%;
+}
+
+/* Header */
+header  {
+    background-color: #FFCBA4; 
+    box-shadow: 1px 1px 5px gray;
+    display: flex;
+    flex-direction: row;
+    height: 150px;
+    align-items: center;
+    padding:15px;
+}
+
+/* Header - Left part*/
+#left-header {
+    width: var(--header-width);
+    
+}
+
+/* Header - Right part*/
+#right-header {
+    width: calc(100%-var(--header-width));
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
