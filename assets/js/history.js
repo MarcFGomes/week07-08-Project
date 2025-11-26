@@ -1,12 +1,12 @@
 //Load localStorage
 let previousSearches = JSON.parse(localStorage.getItem('placesSearched')) || [];
 
+//The history containers
 const historyButton = document.getElementById("history-button");
 const searchButton = document.getElementById("search-button");
 const placeInput = document.getElementById("place");
 const historyList = document.getElementById("history-list");
-
-
+previousSearches = [];
 //Make sure the input is lowerCase except the 1st letter which is uppercase
 const normalize = (str) => {
     str = str.toLowerCase();
@@ -21,20 +21,22 @@ const normalize = (str) => {
 
 
 //Add city searched in my array
-const addSearch = (search) => {
+const addSearch = (search, typeOfSearch) => {
 
-    if (previousSearches.includes(search)) {
-        alert("You already search this city dumbass. Check the quick search options")
+    const exists = previousSearches.some(item => item.value=== search);
+
+    if (exists) {
+        handleQuickSearch(search);
         return;
     }
 
     if(previousSearches.length<8){
-        previousSearches.push(search);
+        previousSearches.push({value: search, type: typeOfSearch});
         
     }
     else {
         previousSearches.shift();
-        previousSearches.push(search);
+        previousSearches.push({value: search, type: typeOfSearch});
         
     }
     
@@ -56,8 +58,12 @@ const render = () => {
 
         let li = document.createElement("li");
 
-        li.textContent = previousSearches[i];
-        li.addEventListener("click", () => handleQuickSearch(previousSearches[i]));
+        li.textContent = previousSearches[i].value;
+        
+        li.classList.add(
+        previousSearches[i].type === "Country" ? "search-country" : "search-capital"
+        );
+        li.addEventListener("click", () => handleQuickSearch(previousSearches[i].value));
 
 
         historyList.append(li);

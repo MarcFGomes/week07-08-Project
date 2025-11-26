@@ -1,6 +1,11 @@
+
+//The search containers
 const modal = document.getElementById("empty-modal");
 const closeModal = document.getElementById("close-modal");
 const modalText = document.getElementById("modal-text");
+const resultsContainer = document.getElementById("results");
+const searchMode = document.getElementById("search-mode");
+const modeSelect = document.getElementById("search-mode");
 
 
 placeInput.addEventListener('keydown', (e) => {
@@ -25,41 +30,79 @@ window.addEventListener("click", (e) => {
 
 
 const handleSearch = () => {
-    let searchValue = placeInput.value.trim();
-    if (!searchValue) {
-        modalText.textContent = "Please enter a place to search";
-        modal.style.display = "block"; // show modal
-        return;
-    }
+  let searchValue = placeInput.value.trim();
+  let mode = searchMode.value;
 
-    // normal search code here
-    console.log("Searching for:", searchValue);
 
-    //Secondary functions
-    searchValue = normalize (searchValue);
-    addSearch(searchValue);
-    render();
-    saveState();
+  if (!searchValue) {
+    showModal("Please enter a place to search");
+    return;
+  }
 
-    placeInput.value=""
+  // normal search code here
+  console.log("Searching for:", searchValue);
+
+  //Secondary functions
+  searchValue = normalize (searchValue);
+  addSearch(searchValue, mode);
+  render();
+  saveState();
+
+  placeInput.value=""
+
+  const indexToPass = previousSearches.findIndex(item => item.value === searchValue);
+  fetchPlaceData(searchValue, mode, indexToPass);
 }
 
 //Searching from previous value
 const handleQuickSearch = (place) =>{
 
-    //Reorganize the array
-    const indexToMove = previousSearches.indexOf(place);
-    previousSearches.splice(indexToMove, 1);
-    previousSearches.push(place);
+  //Reorganize the array
+  const index = previousSearches.findIndex(item => item.value === place);
+  
+  const typeOfSearch = previousSearches[index].type;
 
-    render();
-    saveState();
-    
-    placeInput.value=""
-    
+  previousSearches.splice(index, 1);
+  console.log(previousSearches);
 
+  previousSearches.push({value: place, type: typeOfSearch});
+
+  render();
+  saveState();
+    
+  placeInput.value=""
+  
+  console.log(`my value is ${typeOfSearch}`)
+  fetchPlaceData(place, typeOfSearch, index);
 };
 
 
 //Render my previous searches on refresh or opening site
 render();
+
+
+//Show Modal
+const showModal = (sentence) => {
+  modalText.textContent = sentence;
+  modal.style.display = "block"; // show modal
+}
+
+//Change the placeholder info
+modeSelect.addEventListener("change", () => {
+    if (modeSelect.value === "country") {
+        placeInput.placeholder = "Search by country name";
+    } else if (modeSelect.value === "capital") {
+        placeInput.placeholder = "Search by capital city";
+    }
+});
+
+//skeleton function
+function showSkeletons(count = 3) {
+  resultsContainer.innerHTML = ""; // clear old content
+  
+  for (let i = 0; i < count; i++) {
+    const skeleton = document.createElement("div");
+    skeleton.classList.add("skeleton-card");
+    resultsContainer.appendChild(skeleton);
+  }
+}
