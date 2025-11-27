@@ -136,3 +136,60 @@ header  {
 #results{
   padding: 10px;
 }
+
+
+/* Pagination */
+#pagination {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+#pagination button {
+  border: none;
+  padding: 6px 10px;
+  background-color: #ddd;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+#pagination button:hover {
+  background-color: #aaa;
+}
+
+.unsplash-img {
+  width: 120px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+#image-gallery {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+#pagination button.active-page {
+  background-color: #444;
+  color: white;
+}
+
+
+/* Fade-in animation */
+
+.fade-in {
+  animation: fadeIn 3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
