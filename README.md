@@ -22,21 +22,21 @@ Globe Lens is an interactive web application that allows users to explore countr
 ![Screenshot of Globe Lens showing country details and image gallery](assets/images/screenshot.png)
 
 ## 🌐 Live Demo
-[View Live Site](https://marcfgomes.github.io/week06-07-Project/)
+[View Live Site](https://marcfgomes.github.io/week07-08-Project/)
 
 ## 📂 File Structure
-index.html
-assets/
-css/
-style.css
-images/
-screenshot.png
-js/
-api.js
-containers.js
-history.js
-search.js
-README.md
+- index.html
+- assets/
+- css/
+- style.css
+- images/
+- screenshot.png
+- js/
+- api.js
+- containers.js
+- history.js
+- search.js
+- README.md
 
 
 
