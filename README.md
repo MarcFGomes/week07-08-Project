@@ -27,7 +27,7 @@ Globe Lens is an interactive web application that allows users to explore countr
 [View Live Site](https://marcfgomes.github.io/week07-08-Project/)
 
 ## 📂 File Structure
-...
+```
 /
 ├── index.html
 ├── assets/
@@ -41,7 +41,7 @@ Globe Lens is an interactive web application that allows users to explore countr
 │   ├── history.js
 │   └── search.js
 └── README.md
-...
+```
 
 
 ## 📌 Bootcamp Requirements Met
