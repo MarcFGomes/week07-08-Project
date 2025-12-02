@@ -2,7 +2,7 @@
 
 **A Visual Guide to the World**  
 
-Globe Lens is an interactive web application that allows users to explore countries around the world. By typing a country name, users can see key information such as population, capital, languages, and currency, along with a gallery of beautiful photos sourced from Unsplash. Previous searches are saved and can be quickly accessed via a dropdown menu.  
+Globe Lens is an interactive web application that allows users to explore countries around the world. By typing a country name, users can see key information such the capital and region along with a gallery of beautiful photos sourced from Unsplash. Previous searches are saved and can be quickly accessed via a dropdown menu.  
 
 ## ✨ Features
 - 🔎 Country Search — Get key country details using the REST Countries API
