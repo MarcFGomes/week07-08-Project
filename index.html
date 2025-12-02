@@ -12,7 +12,7 @@
 </head>
 
 <body class="min-h-screen flex flex-col">
-  <header class="bg-[#1d16ae] shadow-md flex flex-col md:flex-row justify-between items-center p-6 text-white gap-6">
+  <header class="bg-[#1d16ae] shadow-md flex flex-col sm:flex-row justify-between items-center p-6 text-white gap-6">
     <!-- Title Section -->
     <div id="left-header" class="text-center md:text-left">
       <h1 class="text-3xl font-bold tracking-wide">Globe Lens</h1>
@@ -43,7 +43,7 @@
           Searches</button>
 
         <ul id="history-list"
-          class="absolute mt-2 bg-white text-gray-800 w-40 rounded-lg shadow-lg hidden max-h-60 overflow-auto">
+          class="absolute mt-2 bg-white text-gray-800 w-40 rounded-lg shadow-lg hidden max-h-60 overflow-auto z-10">
           <!-- Previous searches populated dynamically -->
         </ul>
       </div>
@@ -60,7 +60,7 @@
 
   </header>
 
-  <main id="results" class="flex flex-row gap-6 w-full items-start h-[320px]">
+  <main id="results" class="flex flex-col sm:flex-row gap-6 w-full items-start  sm:h-[320px]">
 
   </main>
 
@@ -71,7 +71,7 @@
 
 
   <footer class="bg-gray-900 text-white text-center py-4 mt-auto">
-    <p>© 2025 Globe Lens. All rights reserved.</p>
+    <p>© 2025 Globe Lens. Marc Gomes</p>
   </footer>
 </body>
 

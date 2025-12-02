@@ -53,11 +53,12 @@ const renderPlaceData = (data, images) => {
   "transition", 
   "transform", 
   "hover:scale-105",
-  "w-1/3",
-  "h-full"
+  "w-full",
+  "sm:w-1/3",
+  "sm:h-full"
 );
 
-cardForImg.classList.add("fade-in", "p-4", "bg-gray-100", "rounded-lg", "shadow-md", "flex", "flex-col", "items-center", "gap-4", "w-2/3", "h-full");
+cardForImg.classList.add("fade-in", "p-4", "bg-gray-100", "rounded-lg", "shadow-md", "flex", "flex-col", "items-center", "gap-4", "sm:w-2/3", "w-full","sm:h-full");
 
   card.innerHTML = `
       <img src="${data[0].flags.svg}" alt="${data[0].name.common}"  class="w-full h-40 object-cover rounded-md shadow-sm"/>
@@ -68,8 +69,8 @@ cardForImg.classList.add("fade-in", "p-4", "bg-gray-100", "rounded-lg", "shadow-
   resultsContainer.appendChild(card);
 
   cardForImg.innerHTML = `
-      <div id="unsplash-gallery" class="flex fl gap-4"></div>
-      <div id="pagination"></div>
+      <div id="unsplash-gallery" class="flex flex-col sm:flex-row gap-4"></div>
+      <div id="pagination" ></div>
     `;
 
   

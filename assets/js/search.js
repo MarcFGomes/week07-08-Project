@@ -99,11 +99,13 @@ const showSkeletons = () => {
   "bg-pink-500",
   "shadow-lg", 
   "rounded-lg", 
-  "w-1/3",
-  "h-full"
+  "w-full",    
+  "sm:w-1/3",   
+  "h-40",
+  "sm:h-full"
 );
   
-  skeletonCardForImg.classList.add("skeleton-card", "relative", "overflow-hidden", "rounded-lg", "shadow-lg", "bg-pink-500", "w-2/3", "h-full");
+  skeletonCardForImg.classList.add("skeleton-card", "relative", "overflow-hidden", "rounded-lg", "shadow-lg", "bg-pink-500", "w-full", "sm:w-2/3", "h-40", "sm:h-full");
 
   resultsContainer.appendChild(skeletonCard);
   resultsContainer.appendChild(skeletonCardForImg);
