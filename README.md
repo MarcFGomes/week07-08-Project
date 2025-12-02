@@ -5,13 +5,13 @@
 Globe Lens is an interactive web application that allows users to explore countries around the world. By typing a country name, users can see key information such as population, capital, languages, and currency, along with a gallery of beautiful photos sourced from Unsplash. Previous searches are saved and can be quickly accessed via a dropdown menu.  
 
 ## ✨ Features
-🔎 Country Search — Get key country details using the REST Countries API
-🖼️ Photo Gallery — High-quality images powered by the Unsplash API
-🕘 Recent Searches — Automatically saved and accessible through a dropdown
-⭐ Favorites — Save countries via localStorage
-⚡ Skeleton Loading States — Smooth, modern loading UI
-❗ Custom Error Modal — Friendly error handling for invalid searches
-📱 Mobile-Responsive — Tailwind-powered responsiveness across all devices
+- 🔎 Country Search — Get key country details using the REST Countries API
+- 🖼️ Photo Gallery — High-quality images powered by the Unsplash API
+- 🕘 Recent Searches — Automatically saved and accessible through a dropdown
+- ⭐ Favorites — Save countries via localStorage
+- ⚡ Skeleton Loading States — Smooth, modern loading UI
+- ❗ Custom Error Modal — Friendly error handling for invalid searches
+- 📱 Mobile-Responsive — Tailwind-powered responsiveness across all devices
 
 ## 💻 Technologies Used
 - HTML5 & CSS3  
