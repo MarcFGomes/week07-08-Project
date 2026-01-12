@@ -4,6 +4,7 @@ const placeInput = document.getElementById("place");
 const historyList = document.getElementById("history-list");
 const modal = document.getElementById("empty-modal");
 const closeModal = document.getElementById("close-modal");
+const closeModalBtn = document.getElementById("close-modal");
 const modalText = document.getElementById("modal-text");
 const resultsContainer = document.getElementById("results");
 const searchMode = document.getElementById("search-mode");

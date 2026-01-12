@@ -39,43 +39,126 @@ async function fetchPlaceData(placeName, type, number) {
 const renderPlaceData = (data, images) => {
   resultsContainer.innerHTML = ""; // remove skeletons
 
-  const card = document.createElement("div");
-  const cardForImg = document.createElement("div");
-  card.classList.add(
-  "country-card", 
-  "fade-in", 
-  "bg-white", 
-  "shadow-lg", 
-  "rounded-lg", 
-  "p-6", 
-  "text-center", 
-  "space-y-2", 
-  "transition", 
-  "transform", 
-  "hover:scale-105",
-  "w-full",
-  "sm:w-1/3",
-  "sm:h-full",
-  "dark:bg-gray-500",
-);
+  const country = data?.[0];
+  if (!country) return;
 
-cardForImg.classList.add("fade-in", "p-4", "bg-gray-100", "rounded-lg", "shadow-md", "flex", "flex-col", "items-center", "gap-4", "sm:w-2/3", "w-full","sm:h-full","dark:bg-gray-500");
+  // === Layout columns ===
+  const leftCol = document.createElement("div");
+  leftCol.classList.add(
+    "w-full",
+    "sm:w-1/3",
+    "flex",
+    "flex-col",
+    "gap-6"
+  );
+
+  const rightCol = document.createElement("div");
+  rightCol.classList.add("w-full", "sm:w-2/3");
+
+  // Country card 
+  const card = document.createElement("div");
+  card.classList.add(
+    "country-card",
+    "fade-in",
+    "bg-white",
+    "shadow-lg",
+    "rounded-lg",
+    "p-6",
+    "text-center",
+    "space-y-2",
+    "transition",
+    "transform",
+    "hover:scale-105",
+    "dark:bg-gray-500"
+  );
 
   card.innerHTML = `
-      <img src="${data[0].flags.svg}" alt="${data[0].name.common}"  class="w-full h-40 object-cover rounded-md shadow-sm"/>
-      <h3 class="text-xl font-bold text-gray-800 dark:text-white">${data[0].name.common}</h3>
-      <p class="text-gray-600 dark:text-white">Capital: ${data[0].capital ? data[0].capital[0] : "N/A"}</p>
-      <p class="text-gray-600 dark:text-white">Region: ${data[0].region}</p>
-    `;
-  resultsContainer.appendChild(card);
+    <img
+      src="${country.flags?.svg}"
+      alt="${country.name?.common}"
+      class="w-full h-40 object-cover rounded-md shadow-sm"
+    />
+    <h3 class="text-xl font-bold text-gray-800 dark:text-white">${country.name?.common}</h3>
+    <p class="text-gray-600 dark:text-white">
+      Capital: ${country.capital ? country.capital[0] : "N/A"}
+    </p>
+    <p class="text-gray-600 dark:text-white">Region: ${country.region || "N/A"}</p>
+  `;
+
+  //Map card (stacked under country card)
+  const mapCard = document.createElement("div");
+  mapCard.classList.add(
+    "fade-in",
+    "bg-white",
+    "shadow-lg",
+    "rounded-lg",
+    "p-4",
+    "dark:bg-gray-500"
+  );
+
+  const [lat, lng] = country.latlng || [];
+  const query = encodeURIComponent(
+    country.capital?.[0] ? `${country.capital[0]}, ${country.name.common}` : country.name.common
+  );
+
+  const mapSrc =
+    lat != null && lng != null
+      ? `https://www.google.com/maps?q=${lat},${lng}&z=5&output=embed`
+      : `https://www.google.com/maps?q=${query}&z=5&output=embed`;
+
+  mapCard.innerHTML = `
+    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">Map</h3>
+
+    <div class="w-full h-64 overflow-hidden rounded-md shadow-sm">
+      <iframe
+        class="w-full h-full"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        src="${mapSrc}"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <a
+      class="inline-block mt-3 text-sm underline text-gray-700 dark:text-white/90"
+      href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+        lat != null && lng != null ? `${lat},${lng}` : query
+      )}"
+      target="_blank"
+      rel="noreferrer"
+    >
+      Open in Google Maps
+    </a>
+  `;
+
+  //Images card (right column)
+  const cardForImg = document.createElement("div");
+  cardForImg.classList.add(
+    "fade-in",
+    "p-4",
+    "bg-gray-100",
+    "rounded-lg",
+    "shadow-md",
+    "flex",
+    "flex-col",
+    "items-center",
+    "gap-4",
+    "dark:bg-gray-500"
+  );
 
   cardForImg.innerHTML = `
-      <div id="unsplash-gallery" class="flex flex-col sm:flex-row gap-4"></div>
-      <div id="pagination" ></div>
-    `;
+    <div id="unsplash-gallery" class="flex flex-col sm:flex-row gap-4"></div>
+    <div id="pagination"></div>
+  `;
 
-  
-  resultsContainer.appendChild(cardForImg);
+  // Assemble columns
+  leftCol.appendChild(card);
+  leftCol.appendChild(mapCard);
+  rightCol.appendChild(cardForImg);
+
+  // Add to results container
+  resultsContainer.appendChild(leftCol);
+  resultsContainer.appendChild(rightCol);
 
   paginateImages(images);
 };

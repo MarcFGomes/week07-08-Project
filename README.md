@@ -40,6 +40,7 @@ Globe Lens is an interactive web application that allows users to explore countr
 │   ├── containers.js
 │   ├── history.js
 │   └── search.js
+|
 └── README.md
 ```
 

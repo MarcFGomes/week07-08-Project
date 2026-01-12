@@ -10,17 +10,6 @@ searchButton.addEventListener("click", () => {
   handleSearch();
 })
 
-// Close modal when clicking X
-  closeModal.addEventListener("click", () => {
-  modal.style.display = "none";
-});
-
-// Close modal when clicking outside content
-window.addEventListener("click", (e) => {
-  if (e.target == modal) {
-    modal.style.display = "none";
-  }
-});
 
 
 const handleSearch = () => {
@@ -70,11 +59,34 @@ const handleQuickSearch = (place) =>{
 render();
 
 
-//Show Modal
+//Show and hide Modal
 const showModal = (sentence) => {
   modalText.textContent = sentence;
    modal.classList.remove("hidden");
 }
+
+const hideModal = () => {
+  modal.classList.add("hidden");
+};
+
+// Close modal (X)
+if (closeModalBtn) {
+  closeModalBtn.addEventListener("click", hideModal);
+}
+
+// Close modal (click overlay only)
+if (modal) {
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) hideModal();
+  });
+}
+
+// Optional: close modal (Esc)
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && modal && !modal.classList.contains("hidden")) {
+    hideModal();
+  }
+});
 
 //Change the placeholder info
 searchMode.addEventListener("change", () => {
@@ -83,6 +95,7 @@ searchMode.addEventListener("change", () => {
     } else if (searchMode.value === "capital") {
         placeInput.placeholder = "Search by capital city";
     }
+  placeInput.focus();
 });
 
 //skeleton function
