@@ -116,6 +116,9 @@ function paginateImages(images) {
       img.src = url;
       img.className = "fade-in w-32 h-24 md:w-40 md:h-28 lg:w-48 lg:h-32 object-cover rounded-md shadow-md transition transform hover:scale-105 hover:shadow-lg cursor-pointer";
       gallery.appendChild(img);
+
+      //Open image modal on click
+      img.addEventListener("click", () => openImageModal(url));
       
     });
 
