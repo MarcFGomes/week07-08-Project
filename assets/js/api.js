@@ -55,16 +55,17 @@ const renderPlaceData = (data, images) => {
   "hover:scale-105",
   "w-full",
   "sm:w-1/3",
-  "sm:h-full"
+  "sm:h-full",
+  "dark:bg-gray-500",
 );
 
 cardForImg.classList.add("fade-in", "p-4", "bg-gray-100", "rounded-lg", "shadow-md", "flex", "flex-col", "items-center", "gap-4", "sm:w-2/3", "w-full","sm:h-full");
 
   card.innerHTML = `
       <img src="${data[0].flags.svg}" alt="${data[0].name.common}"  class="w-full h-40 object-cover rounded-md shadow-sm"/>
-      <h3 class="text-xl font-bold text-gray-800">${data[0].name.common}</h3>
-      <p class="text-gray-600">Capital: ${data[0].capital ? data[0].capital[0] : "N/A"}</p>
-      <p class="text-gray-600">Region: ${data[0].region}</p>
+      <h3 class="text-xl font-bold text-gray-800" "dark:text-white">${data[0].name.common}</h3>
+      <p class="text-gray-600 dark:text-white">Capital: ${data[0].capital ? data[0].capital[0] : "N/A"}</p>
+      <p class="text-gray-600 dark:text-white">Region: ${data[0].region}</p>
     `;
   resultsContainer.appendChild(card);
 

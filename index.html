@@ -1,78 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Globe Lens</title>
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+      };
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Globe Lens</title>
-  <link rel="stylesheet" href="./assets/css/style.css" />
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
+  <body class="min-h-screen flex flex-col dark:bg-black dark:text-white">
+    <header
+      class="bg-[#1d16ae] shadow-md flex flex-col sm:flex-row justify-between items-center p-6 text-white gap-6 dark:bg-emerald-600"
+    >
+      <!-- Title Section -->
+      <div
+        id="left-header"
+        class="flex items-center gap-4 text-center md:text-left"
+      >
+        <div>
+          <h1 class="text-3xl font-bold tracking-wide">Globe Lens</h1>
+          <h2 class="text-lg font-light opacity-90">
+            A Visual Guide to the World
+          </h2>
+        </div>
 
-</head>
-
-<body class="min-h-screen flex flex-col">
-  <header class="bg-[#1d16ae] shadow-md flex flex-col sm:flex-row justify-between items-center p-6 text-white gap-6">
-    <!-- Title Section -->
-    <div id="left-header" class="text-center md:text-left">
-      <h1 class="text-3xl font-bold tracking-wide">Globe Lens</h1>
-      <h2 class="text-lg font-light opacity-90">A Visual Guide to the World</h2>
-    </div>
-
-    <!-- Search Section -->
-    <div id="right-header" class="flex flex-wrap items-center gap-3">
-      <select id="search-mode"
-        class="border border-white/50 bg-white/20 text-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white">
-        <option value="country" class="text-black">Country</option>
-        <option value="capital" class="text-black">Capital</option>
-      </select>
-      <!-- Input Field -->
-      <input type="text" id="place" name="searchPlace" placeholder="Type the place you wish to discover"
-        class="px-4 py-2 rounded-lg w-80 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300" />
-
-      <!-- Search Button -->
-      <button id="search-button"
-        class="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded-lg shadow transition">
-        Search
-      </button>
-
-      <!-- Previous Searches Dropdown -->
-      <div id="history-wrapper">
-        <button id="history-button"
-          class="bg-gray-800 hover:bg-gray-900 text-white font-medium px-4 py-2 rounded-lg shadow transition">Previous
-          Searches</button>
-
-        <ul id="history-list"
-          class="absolute mt-2 bg-white text-gray-800 w-40 rounded-lg shadow-lg hidden max-h-60 overflow-auto z-10">
-          <!-- Previous searches populated dynamically -->
-        </ul>
+        <button
+          id="theme-toggle"
+          class="bg-white/20 hover:bg-white/30 text-white px-3 py-2 rounded-lg transition flex items-center gap-2"
+          aria-label="Toggle theme"
+        >
+          <span id="theme-icon">🌙</span>
+        </button>
       </div>
-    </div>
 
-    <!-- Modal -->
-    <div id="empty-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center relative">
-        <span id="close-modal"
-          class="absolute top-2 right-2 text-gray-500 hover:text-black cursor-pointer text-xl">&times;</span>
-        <p id="modal-text" class="text-gray-800 mt-4"></p>
+      <!-- Search Section -->
+      <div id="right-header" class="flex flex-wrap items-center gap-3">
+        <select
+          id="search-mode"
+          class="border border-white/50 bg-white/20 text-white rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-white"
+        >
+          <option value="country" class="text-black">Country</option>
+          <option value="capital" class="text-black">Capital</option>
+        </select>
+        <!-- Input Field -->
+        <input
+          type="text"
+          id="place"
+          name="searchPlace"
+          placeholder="Type the place you wish to discover"
+          class="px-4 py-2 rounded-lg w-80 bg-white text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:bg-gray-900 dark:text-white"
+        />
+
+        <!-- Search Button -->
+        <button
+          id="search-button"
+          class="bg-green-500 hover:bg-green-600 text-white font-medium px-4 py-2 rounded-lg shadow transition dark:bg-[#1d16ae]"
+        >
+          Search
+        </button>
+
+        <!-- Previous Searches Dropdown -->
+        <div id="history-wrapper">
+          <button
+            id="history-button"
+            class="bg-gray-800 hover:bg-gray-900 text-white font-medium px-4 py-2 rounded-lg shadow transition"
+          >
+            Previous Searches
+          </button>
+
+          <ul
+            id="history-list"
+            class="absolute mt-2 bg-white text-gray-800 w-40 rounded-lg shadow-lg hidden max-h-60 overflow-auto z-10 dark:bg-gray-800 dark:text-white"
+          >
+            <!-- Previous searches populated dynamically -->
+          </ul>
+        </div>
       </div>
-    </div>
 
-  </header>
+      <!-- Modal -->
+      <div
+        id="empty-modal"
+        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      >
+        <div
+          class="bg-white rounded-lg shadow-lg p-6 w-80 text-center relative"
+        >
+          <span
+            id="close-modal"
+            class="absolute top-2 right-2 text-gray-500 hover:text-black cursor-pointer text-xl"
+            >&times;</span
+          >
+          <p id="modal-text" class="text-gray-800 mt-4"></p>
+        </div>
+      </div>
+    </header>
 
-  <main id="results" class="flex flex-col sm:flex-row gap-6 w-full items-start  sm:h-[320px]">
+    <main
+      id="results"
+      class="flex flex-col sm:flex-row gap-6 w-full items-start sm:h-[320px] dark:bg-black dark:text-white"
+    ></main>
 
-  </main>
+    <script src="./assets/js/containers.js"></script>
+    <script src="./assets/js/history.js"></script>
+    <script src="./assets/js/search.js"></script>
+    <script src="./assets/js/api.js"></script>
+    <script src="./assets/js/mode_toggle.js"></script>
 
-  <script src="./assets/js/containers.js"></script>
-  <script src="./assets/js/history.js"></script>
-  <script src="./assets/js/search.js"></script>
-  <script src="./assets/js/api.js"></script>
-
-
-  <footer class="bg-gray-900 text-white text-center py-4 mt-auto">
-    <p>© 2025 Globe Lens. Marc Gomes</p>
-  </footer>
-</body>
-
+    <footer class="bg-gray-900 text-white text-center py-4 mt-auto dark:bg-emerald-800">
+      <p>© 2025 Globe Lens. Marc Gomes</p>
+    </footer>
+  </body>
 </html>
