@@ -59,11 +59,11 @@ const renderPlaceData = (data, images) => {
   "dark:bg-gray-500",
 );
 
-cardForImg.classList.add("fade-in", "p-4", "bg-gray-100", "rounded-lg", "shadow-md", "flex", "flex-col", "items-center", "gap-4", "sm:w-2/3", "w-full","sm:h-full");
+cardForImg.classList.add("fade-in", "p-4", "bg-gray-100", "rounded-lg", "shadow-md", "flex", "flex-col", "items-center", "gap-4", "sm:w-2/3", "w-full","sm:h-full","dark:bg-gray-500");
 
   card.innerHTML = `
       <img src="${data[0].flags.svg}" alt="${data[0].name.common}"  class="w-full h-40 object-cover rounded-md shadow-sm"/>
-      <h3 class="text-xl font-bold text-gray-800" "dark:text-white">${data[0].name.common}</h3>
+      <h3 class="text-xl font-bold text-gray-800 dark:text-white">${data[0].name.common}</h3>
       <p class="text-gray-600 dark:text-white">Capital: ${data[0].capital ? data[0].capital[0] : "N/A"}</p>
       <p class="text-gray-600 dark:text-white">Region: ${data[0].region}</p>
     `;
@@ -116,6 +116,7 @@ function paginateImages(images) {
       img.src = url;
       img.className = "fade-in w-32 h-24 md:w-40 md:h-28 lg:w-48 lg:h-32 object-cover rounded-md shadow-md transition transform hover:scale-105 hover:shadow-lg cursor-pointer";
       gallery.appendChild(img);
+      
     });
 
     updateActiveButton();

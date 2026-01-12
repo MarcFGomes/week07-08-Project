@@ -83,28 +83,47 @@
         </div>
       </div>
 
-      <!-- Modal -->
-      <div
-        id="empty-modal"
-        class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-      >
-        <div
-          class="bg-white rounded-lg shadow-lg p-6 w-80 text-center relative"
-        >
-          <span
-            id="close-modal"
-            class="absolute top-2 right-2 text-gray-500 hover:text-black cursor-pointer text-xl"
-            >&times;</span
-          >
-          <p id="modal-text" class="text-gray-800 mt-4"></p>
-        </div>
-      </div>
+  
     </header>
 
     <main
       id="results"
       class="flex flex-col sm:flex-row gap-6 w-full items-start sm:h-[320px] dark:bg-black dark:text-white"
-    ></main>
+    >
+      <!-- Image Lightbox Modal -->
+      <div
+        id="image-modal"
+        class="hidden fixed inset-0 bg-black/80 dark:bg-black/90 flex items-center justify-center z-50"
+      >
+        <div class="relative max-w-4xl w-full px-4">
+          <span
+            id="image-modal-close"
+            class="absolute top-2 right-2 text-white text-3xl cursor-pointer"
+            >&times;</span
+          >
+          <img
+            id="image-modal-img"
+            src=""
+            alt="Full-size"
+            class="w-full max-h-[90vh] object-contain rounded-lg shadow-lg"
+          />
+        </div>
+      </div>
+    </main>
+
+    <!-- Error Modal -->
+      <div
+    id="empty-modal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+  >
+    <div class="bg-white rounded-lg shadow-lg p-6 w-80 text-center relative">
+      <span
+        id="close-modal"
+        class="absolute top-2 right-2 text-gray-500 hover:text-black cursor-pointer text-xl"
+      >&times;</span>
+      <p id="modal-text" class="text-gray-800 mt-4"></p>
+    </div>
+  </div>
 
     <script src="./assets/js/containers.js"></script>
     <script src="./assets/js/history.js"></script>
@@ -112,7 +131,9 @@
     <script src="./assets/js/api.js"></script>
     <script src="./assets/js/mode_toggle.js"></script>
 
-    <footer class="bg-gray-900 text-white text-center py-4 mt-auto dark:bg-emerald-800">
+    <footer
+      class="bg-gray-900 text-white text-center py-4 mt-auto dark:bg-emerald-800"
+    >
       <p>© 2025 Globe Lens. Marc Gomes</p>
     </footer>
   </body>

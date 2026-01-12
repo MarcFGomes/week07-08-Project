@@ -73,7 +73,7 @@ render();
 //Show Modal
 const showModal = (sentence) => {
   modalText.textContent = sentence;
-  modal.style.display = "block"; // show modal
+   modal.classList.remove("hidden");
 }
 
 //Change the placeholder info
