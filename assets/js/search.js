@@ -100,28 +100,57 @@ searchMode.addEventListener("change", () => {
 
 //skeleton function
 const showSkeletons = () => {
-  resultsContainer.innerHTML = ""; 
+    resultsContainer.innerHTML = "";
 
-  const skeletonCard = document.createElement("div");
-  const skeletonCardForImg = document.createElement("div");
+  // Layout columns (same structure as renderPlaceData)
+  const leftCol = document.createElement("div");
+  leftCol.classList.add("w-full", "sm:w-1/3", "flex", "flex-col", "gap-6");
 
-  skeletonCard.classList.add(
-  "skeleton-card",
-  "relative",
-  "overflow-hidden",
-  "bg-pink-500",
-  "shadow-lg", 
-  "rounded-lg", 
-  "w-full",    
-  "sm:w-1/3",   
-  "h-40",
-  "sm:h-full"
-);
-  
-  skeletonCardForImg.classList.add("skeleton-card", "relative", "overflow-hidden", "rounded-lg", "shadow-lg", "bg-pink-500", "w-full", "sm:w-2/3", "h-40", "sm:h-full");
+  const rightCol = document.createElement("div");
+  rightCol.classList.add("w-full", "sm:w-2/3");
 
-  resultsContainer.appendChild(skeletonCard);
-  resultsContainer.appendChild(skeletonCardForImg);
+  // Country skeleton (roughly your card size)
+  const skeletonCountry = document.createElement("div");
+  skeletonCountry.classList.add(
+    "skeleton-card",
+    "relative",
+    "overflow-hidden",
+    "bg-pink-500",
+    "shadow-lg",
+    "rounded-lg",
+    "h-[320px]" // 👈 make it tall like the country card
+  );
+
+  // Map skeleton (MUST match iframe height h-64)
+  const skeletonMap = document.createElement("div");
+  skeletonMap.classList.add(
+    "skeleton-card",
+    "relative",
+    "overflow-hidden",
+    "bg-pink-500",
+    "shadow-lg",
+    "rounded-lg",
+    "h-64" // 👈 matches your map iframe height
+  );
+
+  // Gallery skeleton (same area as right column)
+  const skeletonGallery = document.createElement("div");
+  skeletonGallery.classList.add(
+    "skeleton-card",
+    "relative",
+    "overflow-hidden",
+    "bg-pink-500",
+    "shadow-lg",
+    "rounded-lg",
+    "h-[320px]" // 👈 matches the gallery container height
+  );
+
+  leftCol.appendChild(skeletonCountry);
+  leftCol.appendChild(skeletonMap);
+  rightCol.appendChild(skeletonGallery);
+
+  resultsContainer.appendChild(leftCol);
+  resultsContainer.appendChild(rightCol);
   
 }
 
