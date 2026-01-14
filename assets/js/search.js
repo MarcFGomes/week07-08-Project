@@ -98,61 +98,53 @@ searchMode.addEventListener("change", () => {
   placeInput.focus();
 });
 
-//skeleton function
+/// skeleton function (4 skeletons: Country + Map on left, Video + Pictures on right)
 const showSkeletons = () => {
-    resultsContainer.innerHTML = "";
+  resultsContainer.innerHTML = "";
+
+  const CARD_H = "h-80"; // change to "h-96" if you later decide
 
   // Layout columns (same structure as renderPlaceData)
   const leftCol = document.createElement("div");
   leftCol.classList.add("w-full", "sm:w-1/3", "flex", "flex-col", "gap-6");
 
   const rightCol = document.createElement("div");
-  rightCol.classList.add("w-full", "sm:w-2/3");
+  rightCol.classList.add("w-full", "sm:w-2/3", "flex", "flex-col", "gap-6");
 
-  // Country skeleton (roughly your card size)
+  // Base skeleton classes
+  const base = [
+    "skeleton-card",
+    "relative",
+    "overflow-hidden",
+    "bg-pink-500",
+    "shadow-lg",
+    "rounded-lg",
+    CARD_H,
+  ];
+
+  // 4 skeletons
   const skeletonCountry = document.createElement("div");
-  skeletonCountry.classList.add(
-    "skeleton-card",
-    "relative",
-    "overflow-hidden",
-    "bg-pink-500",
-    "shadow-lg",
-    "rounded-lg",
-    "h-[320px]" // 👈 make it tall like the country card
-  );
+  skeletonCountry.classList.add(...base);
 
-  // Map skeleton (MUST match iframe height h-64)
   const skeletonMap = document.createElement("div");
-  skeletonMap.classList.add(
-    "skeleton-card",
-    "relative",
-    "overflow-hidden",
-    "bg-pink-500",
-    "shadow-lg",
-    "rounded-lg",
-    "h-64" // 👈 matches your map iframe height
-  );
+  skeletonMap.classList.add(...base);
 
-  // Gallery skeleton (same area as right column)
-  const skeletonGallery = document.createElement("div");
-  skeletonGallery.classList.add(
-    "skeleton-card",
-    "relative",
-    "overflow-hidden",
-    "bg-pink-500",
-    "shadow-lg",
-    "rounded-lg",
-    "h-[320px]" // 👈 matches the gallery container height
-  );
+  const skeletonVideo = document.createElement("div");
+  skeletonVideo.classList.add(...base);
 
+  const skeletonPictures = document.createElement("div");
+  skeletonPictures.classList.add(...base);
+
+  // Append (matches final layout)
   leftCol.appendChild(skeletonCountry);
   leftCol.appendChild(skeletonMap);
-  rightCol.appendChild(skeletonGallery);
+
+  rightCol.appendChild(skeletonVideo);
+  rightCol.appendChild(skeletonPictures);
 
   resultsContainer.appendChild(leftCol);
   resultsContainer.appendChild(rightCol);
-  
-}
+};
 
 const hideSkeletons = () => {
   resultsContainer.innerHTML = ""; // clear old content

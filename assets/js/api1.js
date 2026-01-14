@@ -29,7 +29,7 @@ async function fetchPlaceData(placeName, type, number) {
     const images = await fetchUnsplashImages(placeName);
 
     // Fetch Pexels Video
-    const videos = await fetchPexelsVideo(placeName);
+    const videos = await fetchPexelsVideos(placeName);
 
     renderPlaceData(data, images, videos);
   } catch (error) {
@@ -55,14 +55,14 @@ async function fetchUnsplashImages(query) {
 }
 
 // Fetch Pexels Video
-async function fetchPexelsVideo(query, count = 2) {
+async function fetchPexelsVideos(query, count = 2) {
   try {
     const url = `https://api.pexels.com/videos/search?query=${encodeURIComponent(
       query
     )}&per_page=${count}&orientation=landscape`;
 
     const res = await fetch(url, {
-      headers: { Authorization: PEXELS_API_KEY },
+      headers: { Authorization: apiKeyPexels },
     });
 
     if (!res.ok) return [];
