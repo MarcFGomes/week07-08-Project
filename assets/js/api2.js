@@ -26,7 +26,8 @@ const renderPlaceData = (data, images) => {
     "transform",
     "hover:scale-105",
     "dark:bg-gray-500",
-    "h-80"
+    "h-auto", 
+    "sm:h-80"
   );
 
   card.innerHTML = `
@@ -55,7 +56,8 @@ const renderPlaceData = (data, images) => {
     "rounded-lg",
     "p-4",
     "dark:bg-gray-500",
-    "h-80"
+    "h-auto", 
+    "sm:h-80"
   );
 
   const [lat, lng] = country.latlng || [];
@@ -89,9 +91,9 @@ const renderPlaceData = (data, images) => {
     "shadow-lg",
     "rounded-lg",
     "p-4",
-    
     "dark:bg-gray-500",
-    "h-80"
+    "h-auto", 
+    "sm:h-80"
   );
 
   videoCard.innerHTML = `
@@ -134,7 +136,7 @@ const renderPlaceData = (data, images) => {
       No videos found for this location.
     </p>
   `;
-  // ---- END VIDEO CARD ----
+  //  END VIDEO CARD 
 
   // Image gallery card
   const cardForImg = document.createElement("div");
@@ -149,7 +151,8 @@ const renderPlaceData = (data, images) => {
     "items-center",
     "gap-4",
     "dark:bg-gray-500",
-    "h-80"
+    "h-auto", 
+    "sm:h-80"
   );
 
 cardForImg.innerHTML = `
