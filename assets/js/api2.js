@@ -31,7 +31,19 @@ const renderPlaceData = (data, images) => {
   );
 
   card.innerHTML = `
-    <h3 class="w-full text-left text-lg font-bold text-gray-800 dark:text-white">Country Info</h3>
+    <div class="flex items-center justify-between">
+    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+      Country Info
+    </h3>
+
+    <button
+      id="more-info-btn"
+      class="text-sm px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-800 text-white transition dark:bg-blue-600"
+      type="button"
+    >
+      More info
+    </button>
+  </div>
     <img src="${country.flags?.svg}" alt="${country.name?.common}"
       class="w-full h-28 object-cover rounded-md shadow-sm"/>
     <h3 class="text-xl font-bold text-gray-800 dark:text-white">
@@ -43,7 +55,12 @@ const renderPlaceData = (data, images) => {
     <p class="text-gray-600 dark:text-white">
       Region: ${country.region || "N/A"}
     </p>
+  
   `;
+
+  card.querySelector("#more-info-btn").addEventListener("click", () => {
+  openCountryModal(country);
+});
 
   // Map card
   const mapCard = document.createElement("div");

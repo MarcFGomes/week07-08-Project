@@ -23,7 +23,7 @@
         id="left-header"
         class="flex items-center gap-4 text-center md:text-left cursor-pointer"
       >
-        <div>
+        <div id="refresh_mode">
           <h1 class="text-3xl font-bold tracking-wide">Globe Lens</h1>
           <h2 class="text-lg font-light opacity-90">
             A Visual Guide to the World
@@ -124,6 +124,113 @@
       </div>
     </div>
 
+    <div
+  id="country-modal"
+  class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+>
+  <div
+    class="relative w-full max-w-2xl rounded-lg bg-white shadow-xl dark:bg-gray-900"
+  >
+    <!-- Header -->
+    <div class="flex items-center justify-between border-b p-4 dark:border-white/10">
+      <h3
+        id="country-modal-title"
+        class="text-lg font-bold text-gray-800 dark:text-white"
+      >
+        Country details
+      </h3>
+
+      <button
+        id="country-modal-close"
+        class="rounded-md px-3 py-1 text-gray-600 hover:bg-gray-100 hover:text-black dark:text-white/70 dark:hover:bg-white/10"
+        type="button"
+        aria-label="Close country details"
+      >
+        ✕
+      </button>
+    </div>
+
+    <!-- More info Modal -->
+    <!-- Body -->
+    <div class="p-4">
+      <div class="flex flex-col sm:flex-row gap-4">
+        <img
+          id="country-modal-flag"
+          src=""
+          alt=""
+          class="w-full sm:w-56 h-36 object-cover rounded-md shadow"
+        />
+
+        <div class="flex-1 space-y-2">
+          <p class="text-gray-700 dark:text-white/80">
+            <span class="font-semibold text-gray-900 dark:text-white">Official name:</span>
+            <span id="country-modal-official">—</span>
+          </p>
+
+          <p class="text-gray-700 dark:text-white/80">
+            <span class="font-semibold text-gray-900 dark:text-white">Capital:</span>
+            <span id="country-modal-capital">—</span>
+          </p>
+
+          <p class="text-gray-700 dark:text-white/80">
+            <span class="font-semibold text-gray-900 dark:text-white">Region:</span>
+            <span id="country-modal-region">—</span>
+          </p>
+
+          <p class="text-gray-700 dark:text-white/80">
+            <span class="font-semibold text-gray-900 dark:text-white">Population:</span>
+            <span id="country-modal-population">—</span>
+          </p>
+
+          <p class="text-gray-700 dark:text-white/80">
+            <span class="font-semibold text-gray-900 dark:text-white">Area:</span>
+            <span id="country-modal-area">—</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="rounded-md bg-gray-50 p-3 dark:bg-white/5">
+          <p class="text-sm text-gray-600 dark:text-white/60">Languages</p>
+          <p id="country-modal-languages" class="text-gray-900 dark:text-white">—</p>
+        </div>
+
+        <div class="rounded-md bg-gray-50 p-3 dark:bg-white/5">
+          <p class="text-sm text-gray-600 dark:text-white/60">Currencies</p>
+          <p id="country-modal-currencies" class="text-gray-900 dark:text-white">—</p>
+        </div>
+
+        <div class="rounded-md bg-gray-50 p-3 dark:bg-white/5 sm:col-span-2">
+          <p class="text-sm text-gray-600 dark:text-white/60">Timezones</p>
+          <p id="country-modal-timezones" class="text-gray-900 dark:text-white">—</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="mt-5 flex items-center justify-end gap-2">
+        <a
+          id="country-modal-maps"
+          href="#"
+          target="_blank"
+          rel="noreferrer"
+          class="px-4 py-2 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white transition"
+        >
+          Open in Google Maps
+        </a>
+
+        <button
+          id="country-modal-close-2"
+          class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-900 transition dark:bg-white/10 dark:hover:bg-white/15 dark:text-white"
+          type="button"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+  <!--End of More Info modal-->
+  
     <script src="./assets/js/containers.js"></script>
     <script src="./assets/js/history.js"></script>
     <script src="./assets/js/search.js"></script>
@@ -132,6 +239,7 @@
     <script src="./assets/js/mode_toggle.js"></script>
     <script src="./assets/js/close_image_modal.js"></script>
     <script src="./assets/js/home_refresh.js"></script>
+    <script src="./assets/js/compare.js"></script>
 
     <footer
       class="bg-gray-900 text-white text-center py-4 mt-auto dark:bg-emerald-800"
