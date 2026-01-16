@@ -1,4 +1,4 @@
-const renderPlaceData = (data, images) => {
+const renderPlaceData = (data, images, searchedValue, mode, videos) => {
   resultsContainer.innerHTML = "";
 
   const country = data?.[0];
@@ -31,19 +31,30 @@ const renderPlaceData = (data, images) => {
   );
 
   card.innerHTML = `
-    <div class="flex items-center justify-between">
+  <div class="flex items-center justify-between">
     <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-      Country Info
+      ${mode === "capital" ? "Country (found by capital)" : "Country Info"}
     </h3>
 
     <button
       id="more-info-btn"
-      class="text-sm px-3 py-1 rounded-md bg-blue-400 hover:bg-blue-800 text-white transition dark:bg-blue-600"
+      class="text-sm px-3 py-1 rounded-md
+             bg-blue-400 hover:bg-blue-600
+             dark:bg-blue-600 dark:hover:bg-blue-700
+             text-white transition"
       type="button"
     >
       More info
     </button>
   </div>
+
+  ${
+    mode === "capital"
+      ? `<p class="text-sm text-gray-600 dark:text-white/80">
+           Matched capital: <span class="font-semibold">${searchedValue}</span>
+         </p>`
+      : ""
+  }
     <img src="${country.flags?.svg}" alt="${country.name?.common}"
       class="w-full h-28 object-cover rounded-md shadow-sm"/>
     <h3 class="text-xl font-bold text-gray-800 dark:text-white">
@@ -197,7 +208,7 @@ cardForImg.innerHTML = `
     const counter = videoCard.querySelector("#video-counter");
     const fallback = videoCard.querySelector("#video-fallback");
 
-    const videoLinks = await fetchPexelsVideos(country.name.common, 2);
+    const videoLinks = Array.isArray(videos) ? videos : [];
 
     if (!videoLinks.length) {
       fallback.classList.remove("hidden");

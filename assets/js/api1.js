@@ -31,7 +31,7 @@ async function fetchPlaceData(placeName, type, number) {
     // Fetch Pexels Video
     const videos = await fetchPexelsVideos(placeName);
 
-    renderPlaceData(data, images, videos);
+    renderPlaceData(data, images, placeName, type, videos);
   } catch (error) {
     hideSkeletons();
     showModal("Sorry, could not find what you were looking for");
