@@ -207,30 +207,74 @@
       </div>
 
       <!-- Footer -->
-      <div class="mt-5 flex items-center justify-end gap-2">
-        <a
-          id="country-modal-maps"
-          href="#"
-          target="_blank"
-          rel="noreferrer"
-          class="px-4 py-2 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white transition"
-        >
-          Open in Google Maps
-        </a>
+<div class="mt-5 flex items-center justify-end gap-2">
+  <button
+    id="country-modal-compare"
+    class="px-4 py-2 rounded-md bg-indigo-600 hover:bg-indigo-700 text-white transition"
+    type="button"
+  >
+    Add to Compare
+  </button>
 
-        <button
-          id="country-modal-close-2"
-          class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-900 transition dark:bg-white/10 dark:hover:bg-white/15 dark:text-white"
-          type="button"
-        >
-          Close
-        </button>
-      </div>
+  <a
+    id="country-modal-maps"
+    href="#"
+    target="_blank"
+    rel="noreferrer"
+    class="px-4 py-2 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white transition"
+  >
+    Open in Google Maps
+  </a>
+
+  <button
+    id="country-modal-close-2"
+    class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-900 transition
+           dark:bg-white/10 dark:hover:bg-white/15 dark:text-white"
+    type="button"
+  >
+    Close
+  </button>
+</div>
     </div>
   </div>
 </div>
   <!--End of More Info modal-->
-  
+
+  <!-- Compare Modal -->
+<div
+  id="compare-modal"
+  class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+>
+  <div class="relative w-full max-w-5xl rounded-lg bg-white shadow-xl dark:bg-gray-900">
+    <div class="flex items-center justify-between border-b p-4 dark:border-white/10">
+      <h3 id="compare-title" class="text-lg font-bold text-gray-800 dark:text-white">
+        Compare
+      </h3>
+
+      <button
+        id="compare-close"
+        class="rounded-md px-3 py-1 text-gray-600 hover:bg-gray-100 hover:text-black dark:text-white/70 dark:hover:bg-white/10"
+        type="button"
+      >
+        ✕
+      </button>
+    </div>
+
+    <div id="compare-body" class="p-4"></div>
+
+    <div class="flex justify-end gap-2 border-t p-4 dark:border-white/10">
+      <button
+        id="compare-clear"
+        class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300 text-gray-900 transition
+               dark:bg-white/10 dark:hover:bg-white/15 dark:text-white"
+        type="button"
+      >
+        Clear
+      </button>
+    </div>
+  </div>
+</div>
+
     <script src="./assets/js/containers.js"></script>
     <script src="./assets/js/history.js"></script>
     <script src="./assets/js/search.js"></script>
@@ -239,6 +283,7 @@
     <script src="./assets/js/mode_toggle.js"></script>
     <script src="./assets/js/close_image_modal.js"></script>
     <script src="./assets/js/home_refresh.js"></script>
+    <script src="./assets/js/more_info.js"></script>
     <script src="./assets/js/compare.js"></script>
 
     <footer
