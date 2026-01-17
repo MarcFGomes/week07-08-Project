@@ -76,16 +76,16 @@ SPA-style behavior (no page reloads)
 Fully responsive design (mobile, tablet, desktop)
 
 ## 🧪 Technologies Used
-```
-✔ HTML5
-✔ CSS3
-✔ JavaScript (ES6+)
-✔ Tailwind CSS
-✔ REST Countries API
-✔ Unsplash API
-✔ Pexels API
-✔ Google Maps Embed
-```
+
+- [x] HTML5
+- [x] CSS3
+- [x] JavaScript (ES6+)
+- [x] Tailwind CSS
+- [x] REST Countries API
+- [x] Unsplash API
+- [x] Pexels API
+- [x] Google Maps Embed
+
 
 ## 📸 Demo
 
@@ -118,24 +118,22 @@ Fully responsive design (mobile, tablet, desktop)
 ```
 
 ## 📌 Bootcamp Requirements Met
-```
-✔ CSS Framework (Non-Bootstrap)
-✔ Multiple Server-Side APIs
-✔ Dynamic User Interaction
-✔ Responsive Design
-✔ Polished UI & UX
-✔ Error Handling
-✔ GitHub Pages Deployment
-✔ Clean Repository Structure
-✔ Comprehensive README
-```
+
+- [x] CSS Framework (Non-Bootstrap)
+- [x] Multiple Server-Side APIs
+- [x] Dynamic User Interaction
+- [x] Responsive Design
+- [x] Polished UI & UX
+- [x] Error Handling
+- [x] GitHub Pages Deployment
+- [x] Clean Repository Structure
+- [x] Comprehensive README
 
 ##  🚀 Notable Enhancements Beyond Requirements
-```
-✔ Modal-based detailed views
-✔ Smart country comparison with visual insights
-✔ Auto-triggered compare experience
-✔ Deep-linkable searches
-✔ Strong accessibility patterns
-✔ Mobile-first UX fixes and refinements
-```
+
+- [x] Modal-based detailed views
+- [x] Smart country comparison with visual insights
+- [x] Auto-triggered compare experience
+- [x] Deep-linkable searches
+- [x] Strong accessibility patterns
+- [x] Mobile-first UX fixes and refinements
