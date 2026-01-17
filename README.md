@@ -76,7 +76,7 @@ SPA-style behavior (no page reloads)
 Fully responsive design (mobile, tablet, desktop)
 
 ## 🧪 Technologies Used
-
+```
 ✔ HTML5
 ✔ CSS3
 ✔ JavaScript (ES6+)
@@ -85,6 +85,7 @@ Fully responsive design (mobile, tablet, desktop)
 ✔ Unsplash API
 ✔ Pexels API
 ✔ Google Maps Embed
+```
 
 ## 📸 Demo
 
@@ -95,6 +96,7 @@ Fully responsive design (mobile, tablet, desktop)
 [View Live Site](https://marcfgomes.github.io/week07-08-Project/) 
 
 ## 📂 File Structure
+```
 /
 ├── index.html
 ├── assets/
@@ -113,9 +115,10 @@ Fully responsive design (mobile, tablet, desktop)
 │   └── images/
 │       └── Demo.gif
 └── README.md
+```
 
 ## 📌 Bootcamp Requirements Met
-
+```
 ✔ CSS Framework (Non-Bootstrap)
 ✔ Multiple Server-Side APIs
 ✔ Dynamic User Interaction
@@ -125,12 +128,14 @@ Fully responsive design (mobile, tablet, desktop)
 ✔ GitHub Pages Deployment
 ✔ Clean Repository Structure
 ✔ Comprehensive README
+```
 
 ##  🚀 Notable Enhancements Beyond Requirements
-
+```
 ✔ Modal-based detailed views
 ✔ Smart country comparison with visual insights
 ✔ Auto-triggered compare experience
 ✔ Deep-linkable searches
 ✔ Strong accessibility patterns
 ✔ Mobile-first UX fixes and refinements
+```
