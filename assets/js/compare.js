@@ -1,5 +1,13 @@
-let compareList = []; // stores 0-2 country objects
+// Purpose: Manages the "Compare countries" feature:
+// - stores up to 2 selected countries (shared state)
+// - renders a side-by-side compare modal
+// - highlights "winners" for key metrics (population/area/languages)
+// Exposes a small public API via window.compare so other files (like the country modal)
+// can trigger compare without duplicating logic.
 
+let compareList = []; // stores 0-2 country objects (single source of truth for compare state)
+
+// Modal elements
 const compareModal = document.getElementById("compare-modal");
 const compareBody = document.getElementById("compare-body");
 const compareTitle = document.getElementById("compare-title");
@@ -7,7 +15,8 @@ const compareClose = document.getElementById("compare-close");
 const compareClear = document.getElementById("compare-clear");
 const compareShare = document.getElementById("compare-share");
 
-// --- Helpers ---
+// --- Formatting helpers ---
+// Keep rendering code clean by centralizing formatting rules here.
 function fmt(n) {
   if (typeof n !== "number") return "N/A";
   return n.toLocaleString();
@@ -18,9 +27,12 @@ function langs(c) {
 function curr(c) {
   if (!c.currencies) return "N/A";
   return Object.values(c.currencies)
-    .map(x => (x.symbol ? `${x.name} (${x.symbol})` : x.name))
+    .map((x) => (x.symbol ? `${x.name} (${x.symbol})` : x.name))
     .join(", ");
 }
+
+// Stable identifier used for dedupe comparisons.
+// Prefer cca3 when available; fall back to common name if needed.
 function idOf(c) {
   return c.cca3 || c.name?.common || "";
 }
@@ -28,7 +40,8 @@ function isSame(a, b) {
   return idOf(a) && idOf(b) && idOf(a) === idOf(b);
 }
 
-// --- Smart highlight (winner/loser) ---
+// (Optional styling hook) winner/loser wrapper styles.
+// Currently used as a reusable utility even if called with false in markup.
 function winnerClass(isWinner) {
   // subtle highlight, works in dark mode too
   return isWinner
@@ -36,6 +49,8 @@ function winnerClass(isWinner) {
     : "bg-gray-50 dark:bg-white/5";
 }
 
+// Renders the compare modal using the two selected countries.
+// Will only open when exactly 2 countries are selected.
 function openCompareModal() {
   if (!compareModal || compareList.length !== 2) return;
 
@@ -43,6 +58,8 @@ function openCompareModal() {
 
   compareTitle.textContent = `Compare: ${a.name?.common} vs ${b.name?.common}`;
 
+  // Use -1 as a sentinel fallback so missing values always "lose" comparisons
+  // (real values are non-negative, so they beat -1).
   const popA = a.population ?? -1;
   const popB = b.population ?? -1;
   const areaA = a.area ?? -1;
@@ -50,6 +67,7 @@ function openCompareModal() {
   const langA = a.languages ? Object.keys(a.languages).length : -1;
   const langB = b.languages ? Object.keys(b.languages).length : -1;
 
+  // Highlight logic is computed at render time so UI always reflects current state.
   compareBody.innerHTML = `
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <!-- Country A -->
@@ -97,6 +115,7 @@ function openCompareModal() {
   compareModal.classList.remove("hidden");
 }
 
+// Renders one label/value row, with optional highlight styling for "winner" rows.
 function row(label, value, highlight = false) {
   const cls = highlight
     ? "bg-emerald-100 dark:bg-emerald-500/15"
@@ -109,20 +128,26 @@ function row(label, value, highlight = false) {
   `;
 }
 
-// Expose functions for other files to call
+// Public API for other scripts (ex: country_modal.js) to call without direct imports.
+// This keeps compare state/logic centralized (single source of truth).
 window.compare = {
   getList: () => compareList,
-  add: (country) => {
-    // prevent duplicates
-    if (compareList.some(c => isSame(c, country))) return;
 
+  add: (country) => {
+    // Prevent duplicates (same country added twice)
+    if (compareList.some((c) => isSame(c, country))) return;
+
+    // Maintain a maximum of 2 items:
+    // - if < 2, append
+    // - if already 2, replace the oldest selection (simple and predictable UX)
     if (compareList.length < 2) compareList.push(country);
     else {
       compareList.shift();
       compareList.push(country);
     }
 
-    // update URL for sharing
+    // Update URL so compare state can be preserved/shared (optional feature).
+    // Safe to keep even if you don't expose a "Copy URL" button.
     const [a, b] = compareList;
     const params = new URLSearchParams(window.location.search);
     if (compareList.length === 2) {
@@ -130,36 +155,58 @@ window.compare = {
     } else {
       params.set("compare", idOf(compareList[0]));
     }
-    window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${params.toString()}`
+    );
 
-    // auto-open when ready (wow moment)
+    // "Wow moment": automatically open compare when the selection is complete.
     if (compareList.length === 2) openCompareModal();
   },
+
   clear: () => {
+    // Reset compare state and close the compare modal for a clean restart.
     compareList = [];
     const params = new URLSearchParams(window.location.search);
     params.delete("compare");
-    window.history.replaceState({}, "", `${window.location.pathname}?${params.toString()}`);
+    window.history.replaceState(
+      {},
+      "",
+      `${window.location.pathname}?${params.toString()}`
+    );
     if (compareModal) compareModal.classList.add("hidden");
   },
+
   open: openCompareModal,
 };
 
-// Close handlers
-if (compareClose) compareClose.addEventListener("click", () => compareModal.classList.add("hidden"));
+// Close handlers (click X, click outside, Escape) for consistent modal behavior.
+if (compareClose)
+  compareClose.addEventListener("click", () =>
+    compareModal.classList.add("hidden")
+  );
+
 if (compareModal) {
   compareModal.addEventListener("click", (e) => {
     if (e.target === compareModal) compareModal.classList.add("hidden");
   });
 }
+
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && compareModal && !compareModal.classList.contains("hidden")) {
+  if (
+    e.key === "Escape" &&
+    compareModal &&
+    !compareModal.classList.contains("hidden")
+  ) {
     compareModal.classList.add("hidden");
   }
 });
 
-if (compareClear) compareClear.addEventListener("click", () => window.compare.clear());
+if (compareClear)
+  compareClear.addEventListener("click", () => window.compare.clear());
 
+// Share button is optional. If the element doesn't exist in HTML, this block safely does nothing.
 if (compareShare) {
   compareShare.addEventListener("click", async () => {
     const url = window.location.href;
@@ -168,7 +215,7 @@ if (compareShare) {
       compareShare.textContent = "Copied!";
       setTimeout(() => (compareShare.textContent = "Copy share link"), 1200);
     } catch {
-      // fallback
+      // Clipboard can be blocked in some browsers/contexts; prompt is the fallback.
       prompt("Copy this link:", url);
     }
   });

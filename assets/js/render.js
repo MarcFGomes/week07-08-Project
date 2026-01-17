@@ -1,17 +1,29 @@
+// Purpose: Renders all UI components for a selected country:
+// - country summary card
+// - map embed
+// - video carousel
+// - image gallery with pagination
+// Keeps rendering logic separate from data-fetching logic.
+
 const renderPlaceData = (data, images, searchedValue, mode, videos) => {
+  // Clear previous results before rendering new content
   resultsContainer.innerHTML = "";
 
+  // REST Countries may return multiple matches; we intentionally use the first one
   const country = data?.[0];
   if (!country) return;
 
-  // Layout columns
+  // Two-column responsive layout:
+  // left = country + map, right = video + images
   const leftCol = document.createElement("div");
   leftCol.classList.add("w-full", "sm:w-1/3", "flex", "flex-col", "gap-6");
 
   const rightCol = document.createElement("div");
-  rightCol.classList.add("w-full", "sm:w-2/3", "flex", "flex-col", "gap-6"); 
+  rightCol.classList.add("w-full", "sm:w-2/3", "flex", "flex-col", "gap-6");
 
-  // Country card
+  // -----------------------------
+  // COUNTRY SUMMARY CARD
+  // -----------------------------
   const card = document.createElement("div");
   card.classList.add(
     "country-card",
@@ -26,54 +38,62 @@ const renderPlaceData = (data, images, searchedValue, mode, videos) => {
     "transform",
     "hover:scale-105",
     "dark:bg-gray-500",
-    "h-auto", 
+    "h-auto",
     "sm:h-80"
   );
 
   card.innerHTML = `
-  <div class="flex items-center justify-between">
-    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-      ${mode === "capital" ? "Country (found by capital)" : "Country Info"}
-    </h3>
+    <div class="flex items-center justify-between">
+      <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+        ${mode === "capital" ? "Country (found by capital)" : "Country Info"}
+      </h3>
 
-    <button
-      id="more-info-btn"
-      class="text-sm px-3 py-1 rounded-md
-             bg-blue-400 hover:bg-blue-600
-             dark:bg-blue-600 dark:hover:bg-blue-700
-             text-white transition"
-      type="button"
-    >
-      More info
-    </button>
-  </div>
+      <!-- Opens the detailed country modal -->
+      <button
+        id="more-info-btn"
+        class="text-sm px-3 py-1 rounded-md
+               bg-blue-400 hover:bg-blue-600
+               dark:bg-blue-600 dark:hover:bg-blue-700
+               text-white transition"
+        type="button"
+      >
+        More info
+      </button>
+    </div>
 
-  ${
-    mode === "capital"
-      ? `<p class="text-sm text-gray-600 dark:text-white/80">
-           Matched capital: <span class="font-semibold">${searchedValue}</span>
-         </p>`
-      : ""
-  }
+    ${
+      // When searching by capital, explicitly show what matched
+      mode === "capital"
+        ? `<p class="text-sm text-gray-600 dark:text-white/80">
+             Matched capital: <span class="font-semibold">${searchedValue}</span>
+           </p>`
+        : ""
+    }
+
     <img src="${country.flags?.svg}" alt="${country.name?.common}"
       class="w-full h-28 object-cover rounded-md shadow-sm"/>
+
     <h3 class="text-xl font-bold text-gray-800 dark:text-white">
       ${country.name?.common}
     </h3>
+
     <p class="text-gray-600 dark:text-white">
       Capital: ${country.capital ? country.capital[0] : "N/A"}
     </p>
+
     <p class="text-gray-600 dark:text-white">
       Region: ${country.region || "N/A"}
     </p>
-  
   `;
 
+  // Wire modal opening after HTML injection
   card.querySelector("#more-info-btn").addEventListener("click", () => {
-  openCountryModal(country);
-});
+    openCountryModal(country);
+  });
 
-  // Map card
+  // -----------------------------
+  // MAP CARD
+  // -----------------------------
   const mapCard = document.createElement("div");
   mapCard.classList.add(
     "fade-in",
@@ -84,10 +104,11 @@ const renderPlaceData = (data, images, searchedValue, mode, videos) => {
     "rounded-lg",
     "p-4",
     "dark:bg-gray-500",
-    "h-auto", 
+    "h-auto",
     "sm:h-80"
   );
 
+  // Prefer coordinates when available for precise map centering
   const [lat, lng] = country.latlng || [];
   const query = encodeURIComponent(
     country.capital?.[0]
@@ -101,7 +122,7 @@ const renderPlaceData = (data, images, searchedValue, mode, videos) => {
       : `https://www.google.com/maps?q=${query}&z=5&output=embed`;
 
   mapCard.innerHTML = `
-  <h3 class="text-lg font-bold text-gray-800 dark:text-white">Map</h3>
+    <h3 class="text-lg font-bold text-gray-800 dark:text-white">Map</h3>
     <div class="fade-in w-full flex-1 overflow-hidden rounded-md shadow-sm">
       <iframe
         class="w-full h-full dark:brightness-75 dark:contrast-125"
@@ -111,7 +132,9 @@ const renderPlaceData = (data, images, searchedValue, mode, videos) => {
     </div>
   `;
 
-  //  VIDEO CARD (right of map, same width as image card) ----
+  // -----------------------------
+  // VIDEO CARD
+  // -----------------------------
   const videoCard = document.createElement("div");
   videoCard.classList.add(
     "fade-in",
@@ -120,7 +143,7 @@ const renderPlaceData = (data, images, searchedValue, mode, videos) => {
     "rounded-lg",
     "p-4",
     "dark:bg-gray-500",
-    "h-auto", 
+    "h-auto",
     "sm:h-80"
   );
 
@@ -141,32 +164,19 @@ const renderPlaceData = (data, images, searchedValue, mode, videos) => {
         controls
       ></video>
 
-      <button
-        id="video-prev"
-        class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-10 h-10 flex items-center justify-center"
-        type="button"
-        aria-label="Previous video"
-      >
-        ←
-      </button>
-
-      <button
-        id="video-next"
-        class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white rounded-full w-10 h-10 flex items-center justify-center"
-        type="button"
-        aria-label="Next video"
-      >
-        →
-      </button>
+      <!-- Manual carousel navigation -->
+      <button id="video-prev" class="absolute left-2 top-1/2 -translate-y-1/2 ...">←</button>
+      <button id="video-next" class="absolute right-2 top-1/2 -translate-y-1/2 ...">→</button>
     </div>
 
     <p id="video-fallback" class="hidden mt-3 text-gray-600 dark:text-white/80">
       No videos found for this location.
     </p>
   `;
-  //  END VIDEO CARD 
 
-  // Image gallery card
+  // -----------------------------
+  // IMAGE GALLERY CARD
+  // -----------------------------
   const cardForImg = document.createElement("div");
   cardForImg.classList.add(
     "fade-in",
@@ -179,28 +189,29 @@ const renderPlaceData = (data, images, searchedValue, mode, videos) => {
     "items-center",
     "gap-4",
     "dark:bg-gray-500",
-    "h-auto", 
+    "h-auto",
     "sm:h-80"
   );
 
-cardForImg.innerHTML = `
-  <h3 class="w-full text-left text-lg font-bold text-gray-800 dark:text-white">Pictures</h3>
-  <div id="unsplash-gallery" class="flex-1 flex flex-col sm:flex-row gap-4 items-center"></div>
-  <div id="pagination" class="mt-auto"></div>
-`;
+  cardForImg.innerHTML = `
+    <h3 class="w-full text-left text-lg font-bold text-gray-800 dark:text-white">Pictures</h3>
+    <div id="unsplash-gallery" class="flex-1 flex flex-col sm:flex-row gap-4 items-center"></div>
+    <div id="pagination" class="mt-auto"></div>
+  `;
 
-  // Append layout
+  // Assemble layout
   leftCol.appendChild(card);
   leftCol.appendChild(mapCard);
-
-  // right column = video + images (same width)
   rightCol.appendChild(videoCard);
   rightCol.appendChild(cardForImg);
 
   resultsContainer.appendChild(leftCol);
   resultsContainer.appendChild(rightCol);
 
-  // ---- WIRE VIDEO ARROWS (requires fetchPexelsVideos already defined) ----
+  // -----------------------------
+  // VIDEO CAROUSEL LOGIC
+  // Wrapped in IIFE to keep variables scoped
+  // -----------------------------
   (async () => {
     const videoEl = videoCard.querySelector("#pexels-video");
     const prevBtn = videoCard.querySelector("#video-prev");
@@ -210,6 +221,7 @@ cardForImg.innerHTML = `
 
     const videoLinks = Array.isArray(videos) ? videos : [];
 
+    // Graceful fallback when no videos are available
     if (!videoLinks.length) {
       fallback.classList.remove("hidden");
       prevBtn.disabled = true;
@@ -221,40 +233,34 @@ cardForImg.innerHTML = `
 
     let idx = 0;
 
+    // Centralized video swap logic
     function showVideo(i) {
-  idx = i;
+      idx = i;
+      videoEl.src = videoLinks[idx];
+      videoEl.load();
 
-  videoEl.src = videoLinks[idx];
-  videoEl.load();
+      // Explicit play call improves autoplay reliability
+      const tryPlay = () => {
+        const p = videoEl.play();
+        if (p?.catch) {
+          p.catch(() => videoEl.setAttribute("controls", "controls"));
+        }
+      };
 
-  // Force autoplay (some browsers need an explicit play() call)
-  const tryPlay = () => {
-    const p = videoEl.play();
-    if (p && typeof p.catch === "function") {
-      p.catch((err) => {
-        console.warn("Autoplay blocked:", err);
-        // If blocked, show a hint to the user
-        videoEl.setAttribute("controls", "controls");
-      });
+      tryPlay();
+      videoEl.onloadedmetadata = tryPlay;
+
+      counter.textContent = `${idx + 1} / ${videoLinks.length}`;
     }
-  };
 
-  // Try immediately + after metadata loads (more reliable)
-  tryPlay();
-  videoEl.onloadedmetadata = tryPlay;
+    prevBtn.addEventListener("click", () =>
+      showVideo((idx - 1 + videoLinks.length) % videoLinks.length)
+    );
+    nextBtn.addEventListener("click", () =>
+      showVideo((idx + 1) % videoLinks.length)
+    );
 
-  counter.textContent = `${idx + 1} / ${videoLinks.length}`;
-}
-
-    prevBtn.addEventListener("click", () => {
-      showVideo((idx - 1 + videoLinks.length) % videoLinks.length);
-    });
-
-    nextBtn.addEventListener("click", () => {
-      showVideo((idx + 1) % videoLinks.length);
-    });
-
-    // If only 1 video came back, disable arrows
+    // Disable arrows when only one video exists
     if (videoLinks.length < 2) {
       prevBtn.disabled = true;
       nextBtn.disabled = true;
@@ -264,12 +270,14 @@ cardForImg.innerHTML = `
 
     showVideo(0);
   })();
-  // ---- END VIDEO WIRING ----
 
+  // Image pagination lives outside render logic for clarity
   paginateImages(images);
 };
 
-// Pagination + modal
+// -----------------------------
+// IMAGE PAGINATION
+// -----------------------------
 function paginateImages(images) {
   const gallery = document.getElementById("unsplash-gallery");
   const pagination = document.getElementById("pagination");
@@ -289,6 +297,8 @@ function paginateImages(images) {
         img.src = url;
         img.className =
           "fade-in w-32 h-24 md:w-40 md:h-28 lg:w-48 lg:h-32 object-cover rounded-md shadow-md transition transform hover:scale-105 cursor-pointer";
+
+        // Clicking an image opens the lightbox modal
         img.addEventListener("click", () => openImageModal(url));
         gallery.appendChild(img);
       });
@@ -296,12 +306,14 @@ function paginateImages(images) {
     updateActiveButton();
   }
 
+  // Highlight current pagination button
   function updateActiveButton() {
     [...pagination.children].forEach((btn, i) =>
       btn.classList.toggle("active-page", i + 1 === currentPage)
     );
   }
 
+  // Build pagination controls dynamically
   pagination.innerHTML = "";
   for (let i = 1; i <= totalPages; i++) {
     const btn = document.createElement("button");
@@ -311,4 +323,4 @@ function paginateImages(images) {
   }
 
   displayPage(1);
-  }
+}
